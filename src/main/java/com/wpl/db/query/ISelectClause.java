@@ -15,7 +15,7 @@
  */
 package com.wpl.db.query;
 
-public interface ISelectClause extends IOrderClause {
+public interface ISelectClause extends IWhereClause, IOrderClause {
 
 	void from(Class<?> clazz);
 }

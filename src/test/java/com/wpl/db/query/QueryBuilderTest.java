@@ -23,7 +23,7 @@ public class QueryBuilderTest {
 
 	@Test
 	public void testSelect() {
-		IQueryBuilder select = new Select() {
+		IQueryBuilder query = new Select() {
 			{
 				from(Person.class);
 
@@ -32,6 +32,37 @@ public class QueryBuilderTest {
 		};
 
 		Assert.assertEquals("FROM Person T0 ORDER BY T0.lastName",
-				select.toQuery());
+				query.toQuery());
+	}
+
+	@Test
+	public void testWhereIsNull() {
+		IQueryBuilder query = new Select() {
+			{
+				from(Person.class);
+
+				isNull(on(Person.class).getBirthday());
+			}
+		};
+
+		Assert.assertEquals("FROM Person T0 WHERE (T0.birthday IS NULL)",
+				query.toQuery());
+	}
+
+	@Test
+	public void testAll() {
+		IQueryBuilder query = new Select() {
+			{
+				from(Person.class);
+
+				isNull(on(Person.class).getBirthday());
+				
+				orderBy(on(Person.class).getLastName());
+			}
+		};
+
+		Assert.assertEquals("FROM Person T0 WHERE (T0.birthday IS NULL) ORDER BY T0.lastName",
+				query.toQuery());
+
 	}
 }

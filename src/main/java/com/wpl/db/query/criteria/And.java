@@ -13,30 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.criteria;
 
-public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
+import com.wpl.db.query.ITableSource;
 
-	private ITableSource mTableSource;
+public class And extends CriteriaCollection {
 
-	protected QueryBuilder(ITableSource tableSource) {
-		mTableSource = tableSource;
-	}
-
-
-	@Override
-	public String toString() {
-		return toQuery();
-	}
-
-	protected ITableSource getTableSource() {
-		return mTableSource;
-	}
-
-	protected String getTableAlias(Object argument) {
-		if (mTableSource == null)
-			return null;
-
-		return mTableSource.getAlias(className(argument));
+	public And(ITableSource tableSource) {
+		super(" AND ", tableSource);
 	}
 }

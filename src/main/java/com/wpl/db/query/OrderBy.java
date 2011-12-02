@@ -27,15 +27,23 @@ public class OrderBy extends QueryBuilder implements IOrderClause {
 		public boolean isDecending;
 	}
 
-	private final ArrayList<OrderByItem> mItems = new ArrayList<OrderByItem>();
+	
 
-	public void orderBy(Object argument) {
-		this.orderBy(argument, null);
+	public OrderBy() {
+		this(null);
 	}
 
-	public void orderBy(Object argument, String clazzName) {
+	public OrderBy(ITableSource tableSource) {
+		super(tableSource);
+	}
+
+	private final ArrayList<OrderByItem> mItems = new ArrayList<OrderByItem>();
+
+
+	public void orderBy(Object argument) {
+
 		OrderByItem item = new OrderByItem();
-		item.clazz = clazzName;
+		item.clazz = getTableAlias(argument);
 		item.isDecending = false;
 		item.name = columnName(argument);
 
@@ -43,13 +51,9 @@ public class OrderBy extends QueryBuilder implements IOrderClause {
 	}
 
 	public void orderByDesc(Object argument) {
-		this.orderByDesc(argument, null);
-	}
-
-	public void orderByDesc(Object argument, String classAlias) {
 
 		OrderByItem item = new OrderByItem();
-		item.clazz = classAlias;
+		item.clazz = getTableAlias(argument);
 		item.isDecending = true;
 		item.name = columnName(argument);
 

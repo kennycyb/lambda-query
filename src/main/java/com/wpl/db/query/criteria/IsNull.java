@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.criteria;
 
-public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
+import javax.persistence.Query;
 
-	private ITableSource mTableSource;
+public class IsNull extends Criteria {
 
-	protected QueryBuilder(ITableSource tableSource) {
-		mTableSource = tableSource;
+	public IsNull(String table, String column) {
+		super(table, column);
 	}
 
+	public String toQuery() {
+		if (getTable() == null)
+			return String.format("%s IS NULL", getColumn());
 
-	@Override
-	public String toString() {
-		return toQuery();
+		return String.format("%s.%s IS NULL", getTable(), getColumn());
 	}
 
-	protected ITableSource getTableSource() {
-		return mTableSource;
-	}
-
-	protected String getTableAlias(Object argument) {
-		if (mTableSource == null)
-			return null;
-
-		return mTableSource.getAlias(className(argument));
+	public void setParameter(Query query) {
+		// DO NOTHING
 	}
 }

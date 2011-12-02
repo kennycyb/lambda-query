@@ -15,28 +15,7 @@
  */
 package com.wpl.db.query;
 
-public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
+public interface IWhereClause {
 
-	private ITableSource mTableSource;
-
-	protected QueryBuilder(ITableSource tableSource) {
-		mTableSource = tableSource;
-	}
-
-
-	@Override
-	public String toString() {
-		return toQuery();
-	}
-
-	protected ITableSource getTableSource() {
-		return mTableSource;
-	}
-
-	protected String getTableAlias(Object argument) {
-		if (mTableSource == null)
-			return null;
-
-		return mTableSource.getAlias(className(argument));
-	}
+	void isNull(Object argument);
 }
