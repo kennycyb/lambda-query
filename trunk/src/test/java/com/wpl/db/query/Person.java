@@ -16,6 +16,7 @@
 package com.wpl.db.query;
 
 import java.util.Date;
+import java.util.List;
 
 public class Person {
 
@@ -47,4 +48,5 @@ public class Person {
 		mBirthday = birthday;
 	}
 
+	
 }

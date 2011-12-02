@@ -50,18 +50,41 @@ public class QueryBuilderTest {
 	}
 
 	@Test
+	public void testWhereIsEquals() {
+
+		IQueryBuilder query = new Select() {
+			{
+				from(Person.class);
+
+				isEquals(on(Person.class).getFirstName(), "Kenny");
+				isEquals(on(Person.class).getLastName(), "Chong");
+			}
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"FROM Person T0 WHERE (T0.firstName=:P0 AND T0.lastName=:P1)",
+				query.toQuery());
+
+	}
+
+	@Test
 	public void testAll() {
 		IQueryBuilder query = new Select() {
 			{
 				from(Person.class);
 
 				isNull(on(Person.class).getBirthday());
-				
+
 				orderBy(on(Person.class).getLastName());
+
+				limit(null, 1);
 			}
 		};
 
-		Assert.assertEquals("FROM Person T0 WHERE (T0.birthday IS NULL) ORDER BY T0.lastName",
+		Assert.assertEquals(
+				"FROM Person T0 WHERE (T0.birthday IS NULL) ORDER BY T0.lastName",
 				query.toQuery());
 
 	}

@@ -19,13 +19,15 @@ import javax.persistence.Query;
 
 public class Select extends QueryBuilder implements ISelectClause {
 
-	private OrderBy mOrder;
-	private Where mWhere;
+	private final OrderBy mOrder;
+	private final Where mWhere;
+	private Limit mLimit = null;
 
 	public Select() {
 		super(new TableSource());
 		mWhere = new Where(getTableSource());
 		mOrder = new OrderBy(getTableSource());
+
 	}
 
 	// ~ Select Clause ---------------------------------------------------------
@@ -40,6 +42,10 @@ public class Select extends QueryBuilder implements ISelectClause {
 		mWhere.isNull(argument);
 	}
 
+	public <E> void isEquals(E argument, E value) {
+		mWhere.isEquals(argument, value);
+	}
+
 	// ~ Order By Clause -------------------------------------------------------
 
 	public void orderBy(Object argument) {
@@ -50,8 +56,18 @@ public class Select extends QueryBuilder implements ISelectClause {
 		mOrder.orderByDesc(argument);
 	}
 
+	// ~ Limit Clause ----------------------------------------------------------
+
+	public void limit(Integer first, Integer max) {
+		mLimit = new Limit(first, max);
+	}
+
 	public void setParameter(Query query) {
+		mWhere.setParameter(query);
 		mOrder.setParameter(query);
+
+		if (mLimit != null)
+			mLimit.setParameter(query);
 	}
 
 	public String toQuery() {

@@ -15,7 +15,16 @@
  */
 package com.wpl.db.query;
 
-public interface ISelectClause extends IWhereClause, IOrderClause, ILimitClause {
+public class Contact {
 
-	void from(Class<?> clazz);
+	private String mNumber;
+
+	public String getNumber() {
+		return mNumber;
+	}
+
+	public void setNumber(String number) {
+		mNumber = number;
+	}
+
 }

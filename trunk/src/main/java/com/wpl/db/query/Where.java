@@ -23,7 +23,7 @@ import com.wpl.db.query.criteria.And;
 
 public class Where extends QueryBuilder implements IWhereClause {
 
-	private And mAnd;
+	private final And mAnd;
 
 	public Where(ITableSource tableSource) {
 		super(tableSource);
@@ -34,6 +34,10 @@ public class Where extends QueryBuilder implements IWhereClause {
 
 	public void isNull(Object argument) {
 		mAnd.isNull(argument);
+	}
+
+	public <E> void isEquals(E argument, E value) {
+		mAnd.isEquals(argument, value);
 	}
 
 	// ~ Implementation of IQueryBuilder ---------------------------------------
