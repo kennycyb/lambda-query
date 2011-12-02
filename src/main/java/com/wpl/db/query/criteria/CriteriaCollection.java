@@ -40,6 +40,11 @@ public class CriteriaCollection extends QueryBuilder implements ICriteria {
 		addCriteria(new IsNull(getTableAlias(argument), columnName(argument)));
 	}
 
+	public <E> void isEquals(E argument, E value) {
+		addCriteria(new IsEquals(getTableAlias(argument), columnName(argument),
+				value));
+	}
+
 	public String toQuery() {
 
 		StringBuilder sb = new StringBuilder();

@@ -15,7 +15,7 @@
  */
 package com.wpl.db.query;
 
-public interface ISelectClause extends IWhereClause, IOrderClause, ILimitClause {
+public interface ILimitClause {
 
-	void from(Class<?> clazz);
+	void limit(Integer first, Integer max);
 }

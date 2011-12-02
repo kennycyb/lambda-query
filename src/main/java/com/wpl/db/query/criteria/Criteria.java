@@ -16,11 +16,14 @@
 package com.wpl.db.query.criteria;
 
 import com.wpl.db.query.LambdaBase;
+import com.wpl.db.query.utils.UniqueSequenceNumber;
 
 public abstract class Criteria extends LambdaBase implements ICriteria {
 
 	private String mColumn;
 	private String mTable;
+
+	protected static UniqueSequenceNumber sSeqNumber = new UniqueSequenceNumber();
 
 	public Criteria(String table, String column) {
 		this.mTable = table;

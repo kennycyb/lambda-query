@@ -17,5 +17,16 @@ package com.wpl.db.query;
 
 public interface IWhereClause {
 
+	/**
+	 * 
+	 * @param argument
+	 */
 	void isNull(Object argument);
+
+	/**
+	 * 
+	 * @param argument
+	 * @param value
+	 */
+	<E> void isEquals(E argument, E value);
 }
