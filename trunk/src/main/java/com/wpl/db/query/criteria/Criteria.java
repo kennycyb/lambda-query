@@ -20,13 +20,19 @@ import com.wpl.db.query.LambdaBase;
 public abstract class Criteria extends LambdaBase implements ICriteria {
 
 	private String mColumn;
+	private String mTable;
 
-	public Criteria(String column) {
+	public Criteria(String table, String column) {
+		this.mTable = table;
 		this.mColumn = column;
 	}
 
 	public String getColumn() {
 		return mColumn;
+	}
+
+	public String getTable() {
+		return mTable;
 	}
 
 	@Override

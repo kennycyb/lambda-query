@@ -15,28 +15,15 @@
  */
 package com.wpl.db.query;
 
-public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
+public interface ITableSource {
 
-	private ITableSource mTableSource;
+	void addTable(String clazzName);
 
-	protected QueryBuilder(ITableSource tableSource) {
-		mTableSource = tableSource;
-	}
-
-
-	@Override
-	public String toString() {
-		return toQuery();
-	}
-
-	protected ITableSource getTableSource() {
-		return mTableSource;
-	}
-
-	protected String getTableAlias(Object argument) {
-		if (mTableSource == null)
-			return null;
-
-		return mTableSource.getAlias(className(argument));
-	}
+	/**
+	 * Get the alias name.
+	 * 
+	 * @param clazzName
+	 * @return
+	 */
+	String getAlias(String clazzName);
 }

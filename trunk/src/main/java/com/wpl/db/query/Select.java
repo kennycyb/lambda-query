@@ -15,33 +15,39 @@
  */
 package com.wpl.db.query;
 
-import java.util.ArrayList;
-
 import javax.persistence.Query;
 
 public class Select extends QueryBuilder implements ISelectClause {
 
-	private ArrayList<String> mTables = new ArrayList<String>();
-	private OrderBy mOrder = new OrderBy();
+	private OrderBy mOrder;
+	private Where mWhere;
 
-	public void from(Class<?> clazz) {
-		mTables.add(clazz.getSimpleName());
+	public Select() {
+		super(new TableSource());
+		mWhere = new Where(getTableSource());
+		mOrder = new OrderBy(getTableSource());
 	}
 
+	// ~ Select Clause ---------------------------------------------------------
+
+	public void from(Class<?> clazz) {
+		getTableSource().addTable(clazz.getSimpleName());
+	}
+
+	// ~ Where Clause ----------------------------------------------------------
+
+	public void isNull(Object argument) {
+		mWhere.isNull(argument);
+	}
+
+	// ~ Order By Clause -------------------------------------------------------
+
 	public void orderBy(Object argument) {
-
-		String clazzName = className(argument);
-		int classIndex = mTables.indexOf(clazzName);
-
-		mOrder.orderBy(argument, "T" + classIndex);
+		mOrder.orderBy(argument);
 	}
 
 	public void orderByDesc(Object argument) {
-
-		String clazzName = className(argument);
-		int classIndex = mTables.indexOf(clazzName);
-
-		mOrder.orderByDesc(argument, "T" + classIndex);
+		mOrder.orderByDesc(argument);
 	}
 
 	public void setParameter(Query query) {
@@ -49,21 +55,10 @@ public class Select extends QueryBuilder implements ISelectClause {
 	}
 
 	public String toQuery() {
-
 		StringBuilder sb = new StringBuilder();
-		sb.append("FROM ");
-
-		int index = 0;
-
-		for (String table : mTables) {
-			if (index > 0)
-				sb.append(",");
-
-			sb.append(table).append(" ").append("T").append(index++);
-		}
-
+		sb.append("FROM ").append(getTableSource().toString());
+		sb.append(mWhere.toQuery());
 		sb.append(mOrder.toQuery());
-
 		return sb.toString();
 	}
 }

@@ -19,26 +19,31 @@ import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 
-public class Limit extends QueryBuilder {
+import com.wpl.db.query.criteria.And;
 
-	private Integer mFirst;
-	private Integer mMax;
+public class Where extends QueryBuilder implements IWhereClause {
 
-	public Limit(Integer first, Integer max) {
-		super(null);
-		this.mFirst = first;
-		this.mMax = max;
+	private And mAnd;
+
+	public Where(ITableSource tableSource) {
+		super(tableSource);
+		mAnd = new And(tableSource);
 	}
 
-	public void setParameter(Query query) {
-		if (this.mFirst != null)
-			query.setFirstResult(this.mFirst);
+	// ~ Implementation of IWhereClause ----------------------------------------
 
-		if (this.mMax != null)
-			query.setMaxResults(this.mMax);
+	public void isNull(Object argument) {
+		mAnd.isNull(argument);
+	}
+
+	// ~ Implementation of IQueryBuilder ---------------------------------------
+
+	public void setParameter(Query query) {
+		mAnd.setParameter(query);
 	}
 
 	public String toQuery() {
-		return StringUtils.EMPTY;
+		return mAnd.count() == 0 ? StringUtils.EMPTY : String.format(
+				" WHERE %s", mAnd.toQuery());
 	}
 }
