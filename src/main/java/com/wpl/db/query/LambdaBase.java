@@ -65,8 +65,8 @@ public class LambdaBase {
 		}
 	}
 
-	protected Class<?> className(Object argument) {
+	protected String className(Object argument) {
 		Argument<?> arg = Lambda.argument(argument);
-		return arg.getRootArgumentClass();
+		return arg.getRootArgumentClass().getSimpleName();
 	}
 }
