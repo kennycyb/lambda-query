@@ -32,18 +32,34 @@ public class Where extends QueryBuilder implements IWhereClause {
 		mAnd = new And(tableSource);
 	}
 
+	public Where() {
+		this(null);
+	}
+
 	// ~ Implementation of IWhereClause ----------------------------------------
 
 	public void isNull(Object argument) {
 		mAnd.isNull(argument);
 	}
 
+	public void isNotNull(Object argument) {
+		mAnd.isNotNull(argument);
+	}
+
 	public <E> void isEquals(E argument, E value) {
 		mAnd.isEquals(argument, value);
 	}
 
+	public <E> void isNotEquals(E argument, E value) {
+		mAnd.isNotEquals(argument, value);
+	}
+
 	public void like(Object argument, String pattern) {
 		mAnd.like(argument, pattern);
+	}
+
+	public void notLike(Object argument, String pattern) {
+		mAnd.notLike(argument, pattern);
 	}
 
 	public <E> void between(E argument, E min, E max) {

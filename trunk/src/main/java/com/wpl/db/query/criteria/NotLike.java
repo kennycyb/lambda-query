@@ -17,12 +17,11 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
-public class Like extends Criteria {
-
+public class NotLike extends Criteria {
 	private final String mPattern;
 	private final String mParamName;
 
-	public Like(String table, String column, String pattern) {
+	public NotLike(String table, String column, String pattern) {
 		super(table, column);
 		this.mPattern = pattern;
 		this.mParamName = getNextParamName();
@@ -42,10 +41,11 @@ public class Like extends Criteria {
 
 	public String toQuery() {
 		if (getTable() == null) {
-			return String.format("%s LIKE :%s", getColumn(), getParamName());
+			return String
+					.format("%s NOT LIKE :%s", getColumn(), getParamName());
 		}
 
-		return String.format("%s.%s LIKE :%s", getTable(), getColumn(),
+		return String.format("%s.%s NOT LIKE :%s", getTable(), getColumn(),
 				getParamName());
 	}
 }

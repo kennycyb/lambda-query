@@ -45,13 +45,27 @@ public class CriteriaCollection extends QueryBuilder implements ICriteria,
 		addCriteria(new IsNull(getTableAlias(argument), columnName(argument)));
 	}
 
+	public void isNotNull(Object argument) {
+		addCriteria(new IsNotNull(getTableAlias(argument), columnName(argument)));
+	}
+
 	public <E> void isEquals(E argument, E value) {
 		addCriteria(new IsEquals(getTableAlias(argument), columnName(argument),
 				value));
 	}
 
+	public <E> void isNotEquals(E argument, E value) {
+		addCriteria(new IsNotEquals(getTableAlias(argument),
+				columnName(argument), value));
+	}
+
 	public void like(Object argument, String pattern) {
 		addCriteria(new Like(getTableAlias(argument), columnName(argument),
+				pattern));
+	}
+
+	public void notLike(Object argument, String pattern) {
+		addCriteria(new NotLike(getTableAlias(argument), columnName(argument),
 				pattern));
 	}
 

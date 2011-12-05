@@ -17,35 +17,36 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
-public class Like extends Criteria {
-
-	private final String mPattern;
+public class IsNotEquals extends Criteria {
 	private final String mParamName;
+	private final Object mValue;
 
-	public Like(String table, String column, String pattern) {
+	public IsNotEquals(String table, String column, Object value) {
 		super(table, column);
-		this.mPattern = pattern;
-		this.mParamName = getNextParamName();
-	}
 
-	public String getPattern() {
-		return mPattern;
+		mParamName = String.format("P%d", Criteria.sSeqNumber.next());
+		mValue = value;
 	}
 
 	public String getParamName() {
 		return mParamName;
 	}
 
-	public void setParameter(Query query) {
-		query.setParameter(getParamName(), getPattern());
+	public Object getValue() {
+		return mValue;
 	}
 
 	public String toQuery() {
+
 		if (getTable() == null) {
-			return String.format("%s LIKE :%s", getColumn(), getParamName());
+			return String.format("%s<>:%s", getColumn(), getParamName());
 		}
 
-		return String.format("%s.%s LIKE :%s", getTable(), getColumn(),
+		return String.format("%s.%s<>:%s", getTable(), getColumn(),
 				getParamName());
+	}
+
+	public void setParameter(Query query) {
+		query.setParameter(getParamName(), getValue());
 	}
 }
