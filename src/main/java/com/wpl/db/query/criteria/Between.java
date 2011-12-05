@@ -17,6 +17,8 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class Between<E> extends Criteria {
 
 	private final E mMin;
@@ -25,8 +27,9 @@ public class Between<E> extends Criteria {
 	private final String mMinParamName;
 	private final String mMaxParamName;
 
-	public Between(String table, String column, E min, E max) {
-		super(table, column);
+	public Between(ITableSource tableSource, String table, String column,
+			E min, E max) {
+		super(tableSource, table, column);
 		this.mMin = min;
 		this.mMax = max;
 

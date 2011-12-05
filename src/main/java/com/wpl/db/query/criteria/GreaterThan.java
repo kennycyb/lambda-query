@@ -17,13 +17,16 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class GreaterThan<E> extends Criteria {
 
 	private final E mValue;
 	private final String mParamName;
 
-	public GreaterThan(String table, String column, E value) {
-		super(table, column);
+	public GreaterThan(ITableSource tableSource, String table, String column,
+			E value) {
+		super(tableSource, table, column);
 		this.mValue = value;
 		this.mParamName = getNextParamName();
 	}

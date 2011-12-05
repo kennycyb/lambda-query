@@ -17,9 +17,12 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class IsNotNull extends Criteria {
-	public IsNotNull(String table, String column) {
-		super(table, column);
+
+	public IsNotNull(ITableSource tableSource, String table, String column) {
+		super(tableSource, table, column);
 	}
 
 	public String toQuery() {

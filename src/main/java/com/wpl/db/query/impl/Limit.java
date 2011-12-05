@@ -19,10 +19,13 @@ import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 
-public class Limit extends QueryBuilder {
+/**
+ * Limit the query result.
+ */
+public final class Limit extends QueryBuilder {
 
-	private Integer mFirst;
-	private Integer mMax;
+	private final Integer mFirst;
+	private final Integer mMax;
 
 	public Limit(Integer first, Integer max) {
 		super(null);
@@ -31,11 +34,13 @@ public class Limit extends QueryBuilder {
 	}
 
 	public void setParameter(Query query) {
-		if (this.mFirst != null)
+		if (this.mFirst != null) {
 			query.setFirstResult(this.mFirst);
+		}
 
-		if (this.mMax != null)
+		if (this.mMax != null) {
 			query.setMaxResults(this.mMax);
+		}
 	}
 
 	public String toQuery() {

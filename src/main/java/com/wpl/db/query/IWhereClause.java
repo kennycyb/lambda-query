@@ -47,4 +47,8 @@ public interface IWhereClause extends IQueryBuilder {
 	void notLike(Object argument, String pattern);
 
 	void isEmpty(Collection<?> argument);
+
+	void isNotEmpty(Collection<?> argument);
+
+	<E> void in(Collection<E> argument, Collection<E> values);
 }

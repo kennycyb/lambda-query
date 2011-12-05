@@ -24,13 +24,11 @@ import com.wpl.db.query.ITableSource;
 
 public class OrderBy extends QueryBuilder implements IOrderClause {
 
-	private class OrderByItem {
+	private final class OrderByItem {
 		public String clazz;
 		public String name;
 		public boolean isDecending;
 	}
-
-	
 
 	public OrderBy() {
 		this(null);
@@ -41,7 +39,6 @@ public class OrderBy extends QueryBuilder implements IOrderClause {
 	}
 
 	private final ArrayList<OrderByItem> mItems = new ArrayList<OrderByItem>();
-
 
 	public void orderBy(Object argument) {
 
