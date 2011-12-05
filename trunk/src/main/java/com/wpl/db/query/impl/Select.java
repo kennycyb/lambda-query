@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.impl;
 
 import java.util.Collection;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ISelectClause;
 import com.wpl.db.query.criteria.Or;
 
 public class Select extends QueryBuilder implements ISelectClause {

@@ -22,7 +22,7 @@ import javax.persistence.Query;
 
 import com.wpl.db.query.ITableSource;
 import com.wpl.db.query.IWhereClause;
-import com.wpl.db.query.QueryBuilder;
+import com.wpl.db.query.impl.QueryBuilder;
 
 public class CriteriaCollection extends QueryBuilder implements ICriteria,
 		IWhereClause {
