@@ -54,7 +54,15 @@ public class Delete extends QueryBuilder implements IDeleteClause {
 		mWhere.isNull(argument);
 	}
 
+	public void isNotNull(Object argument) {
+		mWhere.isNotNull(argument);
+	}
+
 	public <E> void isEquals(E argument, E value) {
+		mWhere.isEquals(argument, value);
+	}
+
+	public <E> void isNotEquals(E argument, E value) {
 		mWhere.isEquals(argument, value);
 	}
 
@@ -71,6 +79,10 @@ public class Delete extends QueryBuilder implements IDeleteClause {
 	}
 
 	public void like(Object argument, String pattern) {
+		mWhere.like(argument, pattern);
+	}
+
+	public void notLike(Object argument, String pattern) {
 		mWhere.like(argument, pattern);
 	}
 

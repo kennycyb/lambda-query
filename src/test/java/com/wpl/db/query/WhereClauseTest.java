@@ -15,36 +15,35 @@
  */
 package com.wpl.db.query;
 
-import java.util.Collection;
+import junit.framework.Assert;
 
-public interface IWhereClause extends IQueryBuilder {
+import org.junit.Test;
 
-	/**
-	 * 
-	 * @param argument
-	 */
-	void isNull(Object argument);
+public class WhereClauseTest {
 
-	void isNotNull(Object argument);
+	@Test
+	public void testIsNotNull() {
+		IQueryBuilder query = new Where() {
+			{
+				isNotNull(on(Person.class).getBirthday());
+			}
+		};
 
-	/**
-	 * 
-	 * @param argument
-	 * @param value
-	 */
-	<E> void isEquals(E argument, E value);
+		System.out.println(query.toQuery());
 
-	<E> void isNotEquals(E argument, E value);
+		Assert.assertEquals(" WHERE (birthday IS NOT NULL)", query.toQuery());
+	}
 
-	<E> void between(E argument, E min, E max);
+	@Test
+	public void testIsNotEquals() {
+		IQueryBuilder query = new Where() {
+			{
+				isNotEquals(on(Person.class).getAge(), 10);
+			}
+		};
 
-	<E> void greaterThan(E argument, E value);
+		System.out.println(query.toQuery());
 
-	<E> void lessThan(E argument, E value);
-
-	void like(Object argument, String pattern);
-
-	void notLike(Object argument, String pattern);
-
-	void isEmpty(Collection<?> argument);
+		Assert.assertEquals(" WHERE (age<>:P0)", query.toQuery());
+	}
 }
