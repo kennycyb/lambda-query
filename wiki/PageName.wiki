@@ -1,0 +1,20 @@
+#summary Query-Delete
+
+= Introduction =
+
+Delete Query.
+
+
+= Details =
+
+{{{
+IQueryBuilder query = new Delete() {
+	{
+		delete(Person.class);
+
+		isEmpty(on(Person.class).getContacts());
+        }
+};
+}}}
+
+Output: DELETE FROM Person T0 WHERE (T0.contacts IS EMPTY)
