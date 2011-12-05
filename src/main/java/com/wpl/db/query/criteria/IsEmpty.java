@@ -13,27 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.criteria;
 
-public class Contact {
+import javax.persistence.Query;
 
-	private String mNumber;
-	private Person mPerson;
+public class IsEmpty extends Criteria {
 
-	public Person getPerson() {
-		return mPerson;
+	public IsEmpty(String table, String column) {
+		super(table, column);
 	}
 
-	public void setPerson(Person person) {
-		mPerson = person;
+	public void setParameter(Query query) {
+		// DO NOTHING
 	}
 
-	public String getNumber() {
-		return mNumber;
-	}
+	public String toQuery() {
+		if (getTable() == null)
+			return String.format("%s IS EMPTY", getColumn());
 
-	public void setNumber(String number) {
-		mNumber = number;
+		return String.format("%s.%s IS EMPTY", getTable(), getColumn());
 	}
-
 }

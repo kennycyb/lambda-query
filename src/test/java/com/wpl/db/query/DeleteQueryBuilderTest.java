@@ -15,25 +15,26 @@
  */
 package com.wpl.db.query;
 
-public class Contact {
+import junit.framework.Assert;
 
-	private String mNumber;
-	private Person mPerson;
+import org.junit.Test;
 
-	public Person getPerson() {
-		return mPerson;
+public class DeleteQueryBuilderTest {
+
+	@Test
+	public void testDelete() {
+		IQueryBuilder query = new Delete() {
+			{
+				delete(Person.class);
+
+				isEmpty(on(Person.class).getContacts());
+			}
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"DELETE FROM Person T0 WHERE (T0.contacts IS EMPTY)",
+				query.toQuery());
 	}
-
-	public void setPerson(Person person) {
-		mPerson = person;
-	}
-
-	public String getNumber() {
-		return mNumber;
-	}
-
-	public void setNumber(String number) {
-		mNumber = number;
-	}
-
 }

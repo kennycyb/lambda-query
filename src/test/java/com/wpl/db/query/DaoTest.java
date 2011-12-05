@@ -15,25 +15,24 @@
  */
 package com.wpl.db.query;
 
-public class Contact {
+import javax.persistence.EntityManager;
 
-	private String mNumber;
-	private Person mPerson;
+import org.jmock.Mockery;
 
-	public Person getPerson() {
-		return mPerson;
+import com.wpl.db.Dao;
+
+public class DaoTest {
+
+	Mockery context = new Mockery();
+
+	public void testFirstOrDefault() {
+
+		EntityManager em = context.mock(EntityManager.class);
+
+		new Dao(em) {
+			{
+
+			}
+		}.firstOrDefault(Person.class);
 	}
-
-	public void setPerson(Person person) {
-		mPerson = person;
-	}
-
-	public String getNumber() {
-		return mNumber;
-	}
-
-	public void setNumber(String number) {
-		mNumber = number;
-	}
-
 }

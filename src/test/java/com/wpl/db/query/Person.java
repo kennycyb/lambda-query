@@ -16,13 +16,23 @@
 package com.wpl.db.query;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class Person {
 
 	private String mFirstName;
 	private String mLastName;
+	private int mAge;
 	private Date mBirthday;
+	private Set<Contact> mContacts;
+
+	public int getAge() {
+		return mAge;
+	}
+
+	public void setAge(int age) {
+		mAge = age;
+	}
 
 	public String getFirstName() {
 		return mFirstName;
@@ -48,5 +58,12 @@ public class Person {
 		mBirthday = birthday;
 	}
 
-	
+	public Set<Contact> getContacts() {
+		return mContacts;
+	}
+
+	public void setContacts(Set<Contact> contacts) {
+		mContacts = contacts;
+	}
+
 }

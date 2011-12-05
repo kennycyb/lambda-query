@@ -15,7 +15,11 @@
  */
 package com.wpl.db.query;
 
+import java.util.Collection;
+
 import javax.persistence.Query;
+
+import com.wpl.db.query.criteria.Or;
 
 public class Select extends QueryBuilder implements ISelectClause {
 
@@ -46,6 +50,30 @@ public class Select extends QueryBuilder implements ISelectClause {
 		mWhere.isEquals(argument, value);
 	}
 
+	public void like(Object argument, String pattern) {
+		mWhere.like(argument, pattern);
+	}
+
+	public <E> void between(E argument, E min, E max) {
+		mWhere.between(argument, min, max);
+	}
+
+	public <E> void greaterThan(E argument, E value) {
+		mWhere.greaterThan(argument, value);
+	}
+
+	public <E> void lessThan(E argument, E value) {
+		mWhere.lessThan(argument, value);
+	}
+
+	public void isEmpty(Collection<?> argument) {
+		mWhere.isEmpty(argument);
+	}
+
+	public Or or() {
+		return new Or(getTableSource());
+	}
+
 	// ~ Order By Clause -------------------------------------------------------
 
 	public void orderBy(Object argument) {
@@ -66,8 +94,9 @@ public class Select extends QueryBuilder implements ISelectClause {
 		mWhere.setParameter(query);
 		mOrder.setParameter(query);
 
-		if (mLimit != null)
+		if (mLimit != null) {
 			mLimit.setParameter(query);
+		}
 	}
 
 	public String toQuery() {

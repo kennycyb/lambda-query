@@ -20,14 +20,18 @@ import com.wpl.db.query.utils.UniqueSequenceNumber;
 
 public abstract class Criteria extends LambdaBase implements ICriteria {
 
-	private String mColumn;
-	private String mTable;
+	private final String mColumn;
+	private final String mTable;
 
 	protected static UniqueSequenceNumber sSeqNumber = new UniqueSequenceNumber();
 
 	public Criteria(String table, String column) {
 		this.mTable = table;
 		this.mColumn = column;
+	}
+
+	protected String getNextParamName() {
+		return String.format("P%d", sSeqNumber.next());
 	}
 
 	public String getColumn() {
