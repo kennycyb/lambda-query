@@ -13,31 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.jdbc;
 
-import junit.framework.Assert;
+public class OrderBy {
 
-import org.junit.Test;
-
-import com.wpl.db.query.jpa.Delete;
-
-public class DeleteQueryBuilderTest {
-
-	@Test
-	public void testDelete() {
-
-		IQueryBuilder query = new Delete() {
-			{
-				delete(Person.class);
-
-				isEmpty(on(Person.class).getContacts());
-			}
-		};
-
-		System.out.println(query.toQuery());
-
-		Assert.assertEquals(
-				"DELETE FROM Person T0 WHERE (T0.contacts IS EMPTY)",
-				query.toQuery());
-	}
 }

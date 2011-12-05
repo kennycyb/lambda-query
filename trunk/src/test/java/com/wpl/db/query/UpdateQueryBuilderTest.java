@@ -19,7 +19,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.wpl.db.query.impl.Update;
+import com.wpl.db.query.jpa.Update;
 
 public class UpdateQueryBuilderTest {
 

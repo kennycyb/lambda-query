@@ -13,37 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query.impl;
+package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
+import com.wpl.db.query.ITableSource;
 
-/**
- * Limit the query result.
- */
-public final class Limit extends QueryBuilder {
+public class IsNotEmpty extends Criteria {
 
-	private final Integer mFirst;
-	private final Integer mMax;
-
-	public Limit(Integer first, Integer max) {
-		super(null);
-		this.mFirst = first;
-		this.mMax = max;
+	public IsNotEmpty(ITableSource tableSource, String table, String column) {
+		super(tableSource, table, column);
 	}
 
 	public void setParameter(Query query) {
-		if (this.mFirst != null) {
-			query.setFirstResult(this.mFirst);
-		}
-
-		if (this.mMax != null) {
-			query.setMaxResults(this.mMax);
-		}
+		// DO NOTHING
 	}
 
 	public String toQuery() {
-		return StringUtils.EMPTY;
+		if (getTable() == null) {
+			return String.format("%s IS NOT EMPTY", getColumn());
+		}
+
+		return String.format("%s.%s IS NOT EMPTY", getTable(), getColumn());
 	}
 }

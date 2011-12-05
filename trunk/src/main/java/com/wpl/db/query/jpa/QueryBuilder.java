@@ -13,37 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query.criteria;
+package com.wpl.db.query.jpa;
 
+import com.wpl.db.query.IQueryBuilder;
 import com.wpl.db.query.ITableSource;
-import com.wpl.db.query.jpa.LambdaBase;
 
-public abstract class Criteria extends LambdaBase implements ICriteria {
+public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
 
-	private final String mColumn;
-	private final String mTable;
 	private final ITableSource mTableSource;
 
-	public Criteria(ITableSource tableSource, String table, String column) {
-		this.mTable = table;
-		this.mColumn = column;
-		this.mTableSource = tableSource;
-	}
-
-	protected String getNextParamName() {
-		return mTableSource.getNextParamName();
-	}
-
-	public String getColumn() {
-		return mColumn;
-	}
-
-	public String getTable() {
-		return mTable;
+	protected QueryBuilder(ITableSource tableSource) {
+		mTableSource = tableSource == null ? new TableSource() : tableSource;
 	}
 
 	@Override
 	public String toString() {
 		return toQuery();
+	}
+
+	protected ITableSource getTableSource() {
+		return mTableSource;
+	}
+
+	protected String getTableAlias(Object argument) {
+		if (mTableSource == null) {
+			return null;
+		}
+
+		return mTableSource.getAlias(className(argument));
 	}
 }
