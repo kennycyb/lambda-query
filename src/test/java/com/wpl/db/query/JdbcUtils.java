@@ -15,29 +15,27 @@
  */
 package com.wpl.db.query;
 
-import junit.framework.Assert;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import org.junit.Test;
+public class JdbcUtils {
 
-import com.wpl.db.query.jpa.Delete;
-
-public class DeleteQueryBuilderTest {
-
-	@Test
-	public void testDelete() {
-
-		IQueryBuilder query = new Delete() {
-			{
-				delete(Person.class);
-
-				isEmpty(on(Person.class).getContacts());
+	public static void closeQuietly(Statement stmt) {
+		try {
+			if (stmt != null) {
+				stmt.close();
 			}
-		};
+		} catch (SQLException ignored) {
+		}
+	}
 
-		System.out.println(query.toQuery());
-
-		Assert.assertEquals(
-				"DELETE FROM Person T0 WHERE (T0.contacts IS EMPTY)",
-				query.toQuery());
+	public static void closeQuietly(ResultSet rs) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+		} catch (SQLException ignored) {
+		}
 	}
 }

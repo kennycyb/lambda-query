@@ -20,7 +20,7 @@ import junit.framework.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.wpl.db.query.impl.Select;
+import com.wpl.db.query.jpa.Select;
 
 public class SelectQueryBuilderTest {
 

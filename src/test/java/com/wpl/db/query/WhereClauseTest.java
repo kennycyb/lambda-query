@@ -19,7 +19,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.wpl.db.query.impl.Where;
+import com.wpl.db.query.jpa.Where;
 
 public class WhereClauseTest {
 
