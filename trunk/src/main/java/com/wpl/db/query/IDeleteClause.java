@@ -15,25 +15,11 @@
  */
 package com.wpl.db.query;
 
-public class Contact {
+public interface IDeleteClause extends IWhereClause {
 
-	private String mNumber;
-	private Person mPerson;
-
-	public Person getPerson() {
-		return mPerson;
-	}
-
-	public void setPerson(Person person) {
-		mPerson = person;
-	}
-
-	public String getNumber() {
-		return mNumber;
-	}
-
-	public void setNumber(String number) {
-		mNumber = number;
-	}
-
+	/**
+	 * 
+	 * @param clazz
+	 */
+	void delete(Class<?> clazz);
 }

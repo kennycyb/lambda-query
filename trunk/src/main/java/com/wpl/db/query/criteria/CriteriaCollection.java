@@ -16,13 +16,16 @@
 package com.wpl.db.query.criteria;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Query;
 
 import com.wpl.db.query.ITableSource;
+import com.wpl.db.query.IWhereClause;
 import com.wpl.db.query.QueryBuilder;
 
-public class CriteriaCollection extends QueryBuilder implements ICriteria {
+public class CriteriaCollection extends QueryBuilder implements ICriteria,
+		IWhereClause {
 	private final String mSeparator;
 
 	protected CriteriaCollection(String separator, ITableSource tableSource) {
@@ -36,6 +39,8 @@ public class CriteriaCollection extends QueryBuilder implements ICriteria {
 		return mCriteria.size();
 	}
 
+	// ~ Implementation of IWhereClause ----------------------------------------
+
 	public void isNull(Object argument) {
 		addCriteria(new IsNull(getTableAlias(argument), columnName(argument)));
 	}
@@ -43,6 +48,30 @@ public class CriteriaCollection extends QueryBuilder implements ICriteria {
 	public <E> void isEquals(E argument, E value) {
 		addCriteria(new IsEquals(getTableAlias(argument), columnName(argument),
 				value));
+	}
+
+	public void like(Object argument, String pattern) {
+		addCriteria(new Like(getTableAlias(argument), columnName(argument),
+				pattern));
+	}
+
+	public void isEmpty(Collection<?> argument) {
+		addCriteria(new IsEmpty(getTableAlias(argument), columnName(argument)));
+	}
+
+	public <E> void between(E argument, E min, E max) {
+		addCriteria(new Between<E>(getTableAlias(argument),
+				columnName(argument), min, max));
+	}
+
+	public <E> void greaterThan(E argument, E value) {
+		addCriteria(new GreaterThan<E>(getTableAlias(argument),
+				columnName(argument), value));
+	}
+
+	public <E> void lessThan(E argument, E value) {
+		addCriteria(new LessThan<E>(getTableAlias(argument),
+				columnName(argument), value));
 	}
 
 	public String toQuery() {

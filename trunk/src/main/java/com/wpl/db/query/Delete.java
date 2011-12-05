@@ -19,57 +19,62 @@ import java.util.Collection;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
+public class Delete extends QueryBuilder implements IDeleteClause {
 
-import com.wpl.db.query.criteria.And;
+	private final IWhereClause mWhere;
 
-public class Where extends QueryBuilder implements IWhereClause {
+	public Delete() {
+		super(new TableSource());
+		mWhere = new Where(getTableSource());
+	}
 
-	private final And mAnd;
+	// ~ Implementation of IQueryBuilder ---------------------------------------
 
-	public Where(ITableSource tableSource) {
-		super(tableSource);
-		mAnd = new And(tableSource);
+	public String toQuery() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("DELETE FROM ").append(getTableSource().toString());
+		sb.append(mWhere.toQuery());
+		return sb.toString();
+	}
+
+	public void setParameter(Query query) {
+		mWhere.setParameter(query);
+	}
+
+	// ~ Implementation of IDeleteClause ---------------------------------------
+
+	public void delete(Class<?> clazz) {
+		getTableSource().addTable(clazz.getSimpleName());
 	}
 
 	// ~ Implementation of IWhereClause ----------------------------------------
 
 	public void isNull(Object argument) {
-		mAnd.isNull(argument);
+		mWhere.isNull(argument);
 	}
 
 	public <E> void isEquals(E argument, E value) {
-		mAnd.isEquals(argument, value);
-	}
-
-	public void like(Object argument, String pattern) {
-		mAnd.like(argument, pattern);
+		mWhere.isEquals(argument, value);
 	}
 
 	public <E> void between(E argument, E min, E max) {
-		mAnd.between(argument, min, max);
-	}
-
-	public void isEmpty(Collection<?> argument) {
-		mAnd.isEmpty(argument);
+		mWhere.between(argument, min, max);
 	}
 
 	public <E> void greaterThan(E argument, E value) {
-		mAnd.greaterThan(argument, value);
+		mWhere.greaterThan(argument, value);
 	}
 
 	public <E> void lessThan(E argument, E value) {
-		mAnd.lessThan(argument, value);
+		mWhere.lessThan(argument, value);
 	}
 
-	// ~ Implementation of IQueryBuilder ---------------------------------------
-
-	public void setParameter(Query query) {
-		mAnd.setParameter(query);
+	public void like(Object argument, String pattern) {
+		mWhere.like(argument, pattern);
 	}
 
-	public String toQuery() {
-		return mAnd.count() == 0 ? StringUtils.EMPTY : String.format(
-				" WHERE %s", mAnd.toQuery());
+	public void isEmpty(Collection<?> argument) {
+		mWhere.isEmpty(argument);
 	}
 }

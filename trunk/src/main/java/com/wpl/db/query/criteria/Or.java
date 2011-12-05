@@ -13,27 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.criteria;
 
-public class Contact {
+import com.wpl.db.query.ITableSource;
 
-	private String mNumber;
-	private Person mPerson;
+public class Or extends CriteriaCollection {
 
-	public Person getPerson() {
-		return mPerson;
+	public Or(ITableSource tableSource) {
+		super(" OR ", tableSource);
 	}
-
-	public void setPerson(Person person) {
-		mPerson = person;
-	}
-
-	public String getNumber() {
-		return mNumber;
-	}
-
-	public void setNumber(String number) {
-		mNumber = number;
-	}
-
 }

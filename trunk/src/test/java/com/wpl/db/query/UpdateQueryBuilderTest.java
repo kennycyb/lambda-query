@@ -15,25 +15,29 @@
  */
 package com.wpl.db.query;
 
-public class Contact {
+import junit.framework.Assert;
 
-	private String mNumber;
-	private Person mPerson;
+import org.junit.Test;
 
-	public Person getPerson() {
-		return mPerson;
+public class UpdateQueryBuilderTest {
+
+	@Test
+	public void testUpdate() {
+
+		IQueryBuilder query = new Update() {
+			{
+				update(Person.class);
+
+				set(on(Person.class).getAge(), null);
+
+				isNull(on(Person.class).getBirthday());
+			}
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"UPDATE Person T0 SET T0.age=:age WHERE (T0.birthday IS NULL)",
+				query.toQuery());
 	}
-
-	public void setPerson(Person person) {
-		mPerson = person;
-	}
-
-	public String getNumber() {
-		return mNumber;
-	}
-
-	public void setNumber(String number) {
-		mNumber = number;
-	}
-
 }

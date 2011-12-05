@@ -15,7 +15,9 @@
  */
 package com.wpl.db.query;
 
-public interface IWhereClause {
+import java.util.Collection;
+
+public interface IWhereClause extends IQueryBuilder {
 
 	/**
 	 * 
@@ -29,4 +31,14 @@ public interface IWhereClause {
 	 * @param value
 	 */
 	<E> void isEquals(E argument, E value);
+
+	<E> void between(E argument, E min, E max);
+
+	<E> void greaterThan(E argument, E value);
+
+	<E> void lessThan(E argument, E value);
+
+	void like(Object argument, String pattern);
+
+	void isEmpty(Collection<?> argument);
 }

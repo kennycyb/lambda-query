@@ -19,7 +19,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-public class QueryBuilderTest {
+public class SelectQueryBuilderTest {
 
 	@Test
 	public void testSelect() {
@@ -58,6 +58,71 @@ public class QueryBuilderTest {
 
 				isEquals(on(Person.class).getFirstName(), "Kenny");
 				isEquals(on(Person.class).getLastName(), "Chong");
+			}
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"FROM Person T0 WHERE (T0.firstName=:P0 AND T0.lastName=:P1)",
+				query.toQuery());
+
+	}
+
+	@Test
+	public void testWhereIsEmpty() {
+
+		IQueryBuilder query = new Select() {
+			{
+				from(Person.class);
+
+				isEmpty(on(Person.class).getContacts());
+			}
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals("FROM Person T0 WHERE (T0.contacts IS EMPTY)",
+				query.toQuery());
+
+	}
+
+	@Test
+	public void testWhereBetween() {
+
+		IQueryBuilder query = new Select() {
+			{
+				from(Person.class);
+
+				between(on(Person.class).getAge(), 18, 55);
+			}
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"FROM Person T0 WHERE (T0.age BETWEEN :P0 AND :P1)",
+				query.toQuery());
+
+	}
+
+	@Test
+	public void testWhereOr() {
+
+		IQueryBuilder query = new Select() {
+			{
+				from(Person.class);
+
+				or();
+				{
+					isEquals(on(Person.class).getFirstName(), "Kenny");
+					isEquals(on(Person.class).getLastName(), "Chong");
+				}
+
+				or();
+				{
+					isNull(on(Person.class).getLastName());
+				}
 			}
 		};
 
