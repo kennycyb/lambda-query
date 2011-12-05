@@ -13,30 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.impl;
 
-public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
+import javax.persistence.Query;
 
-	private ITableSource mTableSource;
+import org.apache.commons.lang.StringUtils;
 
-	protected QueryBuilder(ITableSource tableSource) {
-		mTableSource = tableSource;
+public class Limit extends QueryBuilder {
+
+	private Integer mFirst;
+	private Integer mMax;
+
+	public Limit(Integer first, Integer max) {
+		super(null);
+		this.mFirst = first;
+		this.mMax = max;
 	}
 
+	public void setParameter(Query query) {
+		if (this.mFirst != null)
+			query.setFirstResult(this.mFirst);
 
-	@Override
-	public String toString() {
-		return toQuery();
+		if (this.mMax != null)
+			query.setMaxResults(this.mMax);
 	}
 
-	protected ITableSource getTableSource() {
-		return mTableSource;
-	}
-
-	protected String getTableAlias(Object argument) {
-		if (mTableSource == null)
-			return null;
-
-		return mTableSource.getAlias(className(argument));
+	public String toQuery() {
+		return StringUtils.EMPTY;
 	}
 }

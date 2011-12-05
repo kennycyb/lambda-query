@@ -13,19 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Query;
 
-public class Delete extends QueryBuilder implements IDeleteClause {
+import com.wpl.db.query.IUpdateClause;
+import com.wpl.db.query.IWhereClause;
+
+public class Update extends QueryBuilder implements IUpdateClause {
+
+	class UpdateItem {
+		public String table;
+		public String column;
+		public Object value;
+	}
 
 	private final IWhereClause mWhere;
+	private final List<UpdateItem> mItems;
 
-	public Delete() {
+	public Update() {
 		super(new TableSource());
 		mWhere = new Where(getTableSource());
+		mItems = new ArrayList<UpdateItem>();
+	}
+
+	// ~ Implementation of IUpdateClause ---------------------------------------
+
+	public void update(Class<?> clazz) {
+		getTableSource().addTable(clazz.getSimpleName());
+	}
+
+	public <E> void set(final E argument, final E value) {
+
+		UpdateItem item = new UpdateItem();
+
+		item.table = getTableAlias(argument);
+		item.column = columnName(argument);
+		item.value = value;
+
+		mItems.add(item);
 	}
 
 	// ~ Implementation of IQueryBuilder ---------------------------------------
@@ -33,19 +63,34 @@ public class Delete extends QueryBuilder implements IDeleteClause {
 	public String toQuery() {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM ").append(getTableSource().toString());
+		sb.append("UPDATE ").append(getTableSource().toString());
+		sb.append(" SET ");
+
+		boolean isFirst = true;
+
+		for (UpdateItem item : mItems) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				sb.append(",");
+			}
+
+			sb.append(item.table).append(".").append(item.column).append("=:")
+					.append(item.column);
+		}
+
 		sb.append(mWhere.toQuery());
+
 		return sb.toString();
 	}
 
 	public void setParameter(Query query) {
+
+		for (UpdateItem item : mItems) {
+			query.setParameter(item.column, item.value);
+		}
+
 		mWhere.setParameter(query);
-	}
-
-	// ~ Implementation of IDeleteClause ---------------------------------------
-
-	public void delete(Class<?> clazz) {
-		getTableSource().addTable(clazz.getSimpleName());
 	}
 
 	// ~ Implementation of IWhereClause ----------------------------------------
@@ -63,7 +108,7 @@ public class Delete extends QueryBuilder implements IDeleteClause {
 	}
 
 	public <E> void isNotEquals(E argument, E value) {
-		mWhere.isEquals(argument, value);
+		mWhere.isNotEquals(argument, value);
 	}
 
 	public <E> void between(E argument, E min, E max) {
@@ -83,10 +128,11 @@ public class Delete extends QueryBuilder implements IDeleteClause {
 	}
 
 	public void notLike(Object argument, String pattern) {
-		mWhere.like(argument, pattern);
+		mWhere.notLike(argument, pattern);
 	}
 
 	public void isEmpty(Collection<?> argument) {
 		mWhere.isEmpty(argument);
 	}
+
 }

@@ -19,6 +19,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.wpl.db.query.impl.Update;
+
 public class UpdateQueryBuilderTest {
 
 	@Test

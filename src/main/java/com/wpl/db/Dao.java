@@ -21,7 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.wpl.db.query.IQueryBuilder;
-import com.wpl.db.query.Select;
+import com.wpl.db.query.impl.Select;
 
 public class Dao {
 

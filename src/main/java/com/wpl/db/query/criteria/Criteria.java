@@ -15,7 +15,7 @@
  */
 package com.wpl.db.query.criteria;
 
-import com.wpl.db.query.LambdaBase;
+import com.wpl.db.query.impl.LambdaBase;
 import com.wpl.db.query.utils.UniqueSequenceNumber;
 
 public abstract class Criteria extends LambdaBase implements ICriteria {

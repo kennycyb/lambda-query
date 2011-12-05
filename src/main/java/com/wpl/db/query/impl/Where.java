@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.impl;
 
 import java.util.Collection;
 
@@ -21,6 +21,8 @@ import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.wpl.db.query.ITableSource;
+import com.wpl.db.query.IWhereClause;
 import com.wpl.db.query.criteria.And;
 
 public class Where extends QueryBuilder implements IWhereClause {
