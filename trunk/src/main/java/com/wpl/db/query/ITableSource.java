@@ -26,4 +26,11 @@ public interface ITableSource {
 	 * @return
 	 */
 	String getAlias(String clazzName);
+
+	/**
+	 * Get the next param name
+	 * 
+	 * @return
+	 */
+	String getNextParamName();
 }

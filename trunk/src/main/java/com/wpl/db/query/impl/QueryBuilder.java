@@ -20,12 +20,11 @@ import com.wpl.db.query.ITableSource;
 
 public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
 
-	private ITableSource mTableSource;
+	private final ITableSource mTableSource;
 
 	protected QueryBuilder(ITableSource tableSource) {
-		mTableSource = tableSource;
+		mTableSource = tableSource == null ? new TableSource() : tableSource;
 	}
-
 
 	@Override
 	public String toString() {
@@ -37,8 +36,9 @@ public abstract class QueryBuilder extends LambdaBase implements IQueryBuilder {
 	}
 
 	protected String getTableAlias(Object argument) {
-		if (mTableSource == null)
+		if (mTableSource == null) {
 			return null;
+		}
 
 		return mTableSource.getAlias(className(argument));
 	}

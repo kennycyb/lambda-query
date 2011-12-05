@@ -17,15 +17,17 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class IsEquals extends Criteria {
 
 	private final String mParamName;
 	private final Object mValue;
 
-	public IsEquals(String table, String column, Object value) {
-		super(table, column);
-
-		mParamName = String.format("P%d", sSeqNumber.next());
+	public IsEquals(ITableSource tableSource, String table, String column,
+			Object value) {
+		super(tableSource, table, column);
+		mParamName = tableSource.getNextParamName();
 		mValue = value;
 	}
 

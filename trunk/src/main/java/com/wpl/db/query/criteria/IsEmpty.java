@@ -17,10 +17,12 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class IsEmpty extends Criteria {
 
-	public IsEmpty(String table, String column) {
-		super(table, column);
+	public IsEmpty(ITableSource tableSource, String table, String column) {
+		super(tableSource, table, column);
 	}
 
 	public void setParameter(Query query) {
@@ -28,8 +30,9 @@ public class IsEmpty extends Criteria {
 	}
 
 	public String toQuery() {
-		if (getTable() == null)
+		if (getTable() == null) {
 			return String.format("%s IS EMPTY", getColumn());
+		}
 
 		return String.format("%s.%s IS EMPTY", getTable(), getColumn());
 	}

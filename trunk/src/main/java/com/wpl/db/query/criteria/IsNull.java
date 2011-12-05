@@ -17,15 +17,18 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class IsNull extends Criteria {
 
-	public IsNull(String table, String column) {
-		super(table, column);
+	public IsNull(ITableSource tableSource, String table, String column) {
+		super(tableSource, table, column);
 	}
 
 	public String toQuery() {
-		if (getTable() == null)
+		if (getTable() == null) {
 			return String.format("%s IS NULL", getColumn());
+		}
 
 		return String.format("%s.%s IS NULL", getTable(), getColumn());
 	}

@@ -72,12 +72,20 @@ public class Where extends QueryBuilder implements IWhereClause {
 		mAnd.isEmpty(argument);
 	}
 
+	public void isNotEmpty(Collection<?> argument) {
+		mAnd.isNotEmpty(argument);
+	}
+
 	public <E> void greaterThan(E argument, E value) {
 		mAnd.greaterThan(argument, value);
 	}
 
 	public <E> void lessThan(E argument, E value) {
 		mAnd.lessThan(argument, value);
+	}
+
+	public <E> void in(Collection<E> argument, Collection<E> values) {
+		mAnd.in(argument, values);
 	}
 
 	// ~ Implementation of IQueryBuilder ---------------------------------------

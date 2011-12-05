@@ -17,12 +17,15 @@ package com.wpl.db.query.criteria;
 
 import javax.persistence.Query;
 
+import com.wpl.db.query.ITableSource;
+
 public class NotLike extends Criteria {
 	private final String mPattern;
 	private final String mParamName;
 
-	public NotLike(String table, String column, String pattern) {
-		super(table, column);
+	public NotLike(ITableSource tableSource, String table, String column,
+			String pattern) {
+		super(tableSource, table, column);
 		this.mPattern = pattern;
 		this.mParamName = getNextParamName();
 	}

@@ -83,6 +83,14 @@ public class Select extends QueryBuilder implements ISelectClause {
 		mWhere.isEmpty(argument);
 	}
 
+	public void isNotEmpty(Collection<?> argument) {
+		mWhere.isNotEmpty(argument);
+	}
+
+	public <E> void in(Collection<E> argument, Collection<E> values) {
+		mWhere.in(argument, values);
+	}
+
 	public Or or() {
 		return new Or(getTableSource());
 	}

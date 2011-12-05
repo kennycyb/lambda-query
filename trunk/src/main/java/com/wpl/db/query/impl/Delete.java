@@ -92,4 +92,12 @@ public class Delete extends QueryBuilder implements IDeleteClause {
 	public void isEmpty(Collection<?> argument) {
 		mWhere.isEmpty(argument);
 	}
+
+	public void isNotEmpty(Collection<?> argument) {
+		mWhere.isNotEmpty(argument);
+	}
+
+	public <E> void in(Collection<E> argument, Collection<E> values) {
+		mWhere.in(argument, values);
+	}
 }

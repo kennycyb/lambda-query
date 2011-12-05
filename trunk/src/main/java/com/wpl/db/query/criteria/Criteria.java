@@ -15,23 +15,23 @@
  */
 package com.wpl.db.query.criteria;
 
+import com.wpl.db.query.ITableSource;
 import com.wpl.db.query.impl.LambdaBase;
-import com.wpl.db.query.utils.UniqueSequenceNumber;
 
 public abstract class Criteria extends LambdaBase implements ICriteria {
 
 	private final String mColumn;
 	private final String mTable;
+	private final ITableSource mTableSource;
 
-	protected static UniqueSequenceNumber sSeqNumber = new UniqueSequenceNumber();
-
-	public Criteria(String table, String column) {
+	public Criteria(ITableSource tableSource, String table, String column) {
 		this.mTable = table;
 		this.mColumn = column;
+		this.mTableSource = tableSource;
 	}
 
 	protected String getNextParamName() {
-		return String.format("P%d", sSeqNumber.next());
+		return mTableSource.getNextParamName();
 	}
 
 	public String getColumn() {

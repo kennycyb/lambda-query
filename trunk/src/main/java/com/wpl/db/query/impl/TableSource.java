@@ -24,10 +24,10 @@ import com.wpl.db.query.utils.UniqueSequenceNumber;
 
 public class TableSource implements ITableSource {
 
-	private ArrayList<String> mTables = new ArrayList<String>();
-	private Map<String, String> mAlias = new HashMap<String, String>();
+	private final ArrayList<String> mTables = new ArrayList<String>();
+	private final Map<String, String> mAlias = new HashMap<String, String>();
 
-	UniqueSequenceNumber mSeqNum = new UniqueSequenceNumber();
+	private final UniqueSequenceNumber mSeqNum = new UniqueSequenceNumber();
 
 	public void addTable(String clazzName) {
 		mTables.add(clazzName);
@@ -39,6 +39,10 @@ public class TableSource implements ITableSource {
 		return mAlias.get(clazzName);
 	}
 
+	public String getNextParamName() {
+		return "P" + mSeqNum.next();
+	}
+
 	@Override
 	public String toString() {
 		int index = 0;
@@ -46,10 +50,11 @@ public class TableSource implements ITableSource {
 		StringBuilder sb = new StringBuilder();
 
 		for (String table : mTables) {
-			if (index > 0)
+			if (index > 0) {
 				sb.append(",");
+			}
 
-			sb.append(table).append(" ").append("T").append(index++);
+			sb.append(table).append(" ").append(getAlias(table));
 		}
 
 		return sb.toString();

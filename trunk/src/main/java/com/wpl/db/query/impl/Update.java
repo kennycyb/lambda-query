@@ -135,4 +135,12 @@ public class Update extends QueryBuilder implements IUpdateClause {
 		mWhere.isEmpty(argument);
 	}
 
+	public void isNotEmpty(Collection<?> argument) {
+		mWhere.isNotEmpty(argument);
+	}
+
+	public <E> void in(Collection<E> argument, Collection<E> values) {
+		mWhere.in(argument, values);
+	}
+
 }
