@@ -13,26 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.jpa;
 
-import javax.persistence.EntityManager;
+import junit.framework.Assert;
 
-import org.jmock.Mockery;
+import org.junit.Test;
 
-import com.wpl.db.Dao;
+import com.wpl.db.query.IQueryBuilder;
+import com.wpl.db.query.Person;
+import com.wpl.db.query.jpa.Update;
 
-public class DaoTest {
+public class UpdateQueryBuilderTest {
 
-	Mockery context = new Mockery();
+	@Test
+	public void testUpdate() {
 
-	public void testFirstOrDefault() {
-
-		EntityManager em = context.mock(EntityManager.class);
-
-		new Dao(em) {
+		IQueryBuilder query = new Update() {
 			{
+				update(Person.class);
 
+				set(on(Person.class).getAge(), null);
+
+				isNull(on(Person.class).getBirthday());
 			}
-		}.firstOrDefault(Person.class);
+		};
+
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"UPDATE Person T0 SET T0.age=:age WHERE (T0.birthday IS NULL)",
+				query.toQuery());
 	}
 }

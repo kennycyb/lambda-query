@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.jpa;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.wpl.db.query.IQueryBuilder;
+import com.wpl.db.query.Person;
 import com.wpl.db.query.jpa.Where;
 
 public class WhereClauseTest {
