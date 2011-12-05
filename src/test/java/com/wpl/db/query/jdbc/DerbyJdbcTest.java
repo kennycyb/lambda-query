@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.jdbc;
 
 import java.io.File;
 import java.sql.Connection;
@@ -25,6 +25,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.wpl.db.query.IQueryBuilder;
+import com.wpl.db.query.Person;
 import com.wpl.db.query.jpa.Select;
 
 public class DerbyJdbcTest {

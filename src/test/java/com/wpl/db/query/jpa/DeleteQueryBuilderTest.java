@@ -13,29 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query;
+package com.wpl.db.query.jpa;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import junit.framework.Assert;
 
-public class JdbcUtils {
+import org.junit.Test;
 
-	public static void closeQuietly(Statement stmt) {
-		try {
-			if (stmt != null) {
-				stmt.close();
+import com.wpl.db.query.IQueryBuilder;
+import com.wpl.db.query.Person;
+import com.wpl.db.query.jpa.Delete;
+
+public class DeleteQueryBuilderTest {
+
+	@Test
+	public void testDelete() {
+
+		IQueryBuilder query = new Delete() {
+			{
+				delete(Person.class);
+
+				isEmpty(on(Person.class).getContacts());
 			}
-		} catch (SQLException ignored) {
-		}
-	}
+		};
 
-	public static void closeQuietly(ResultSet rs) {
-		try {
-			if (rs != null) {
-				rs.close();
-			}
-		} catch (SQLException ignored) {
-		}
+		System.out.println(query.toQuery());
+
+		Assert.assertEquals(
+				"DELETE FROM Person T0 WHERE (T0.contacts IS EMPTY)",
+				query.toQuery());
 	}
 }
