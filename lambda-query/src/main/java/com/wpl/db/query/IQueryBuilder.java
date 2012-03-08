@@ -18,6 +18,13 @@ package com.wpl.db.query;
 import javax.persistence.Query;
 
 public interface IQueryBuilder {
+
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+
 	String toQuery();
 
 	void setParameter(Query query);
