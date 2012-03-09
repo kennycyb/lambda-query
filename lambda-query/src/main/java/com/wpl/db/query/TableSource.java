@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query.jpa;
+package com.wpl.db.query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.wpl.db.query.ITableSource;
 import com.wpl.db.query.utils.UniqueSequenceNumber;
 
 public class TableSource implements ITableSource {

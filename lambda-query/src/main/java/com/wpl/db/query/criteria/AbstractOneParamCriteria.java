@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Kenny Chong (wongpeiling.com)
+ * Copyright 2011,2012 Kenny Chong (wongpeiling.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,40 +15,47 @@
  */
 package com.wpl.db.query.criteria;
 
-import javax.persistence.Query;
-
+import com.wpl.db.query.IQuery;
 import com.wpl.db.query.ITableSource;
 
-public class LessThan<E> extends Criteria {
+public abstract class AbstractOneParamCriteria<E> extends Criteria {
+
 	private final E mValue;
 	private final String mParamName;
+	private final String mOperator;
 
-	public LessThan(ITableSource tableSource, String table, String column,
-			E value) {
+	public AbstractOneParamCriteria(ITableSource tableSource, String table,
+			String column, E value, String operator) {
 		super(tableSource, table, column);
 		this.mValue = value;
 		this.mParamName = getNextParamName();
+		this.mOperator = operator;
 	}
 
-	public String getParamName() {
+	public final String getParamName() {
 		return mParamName;
 	}
 
-	public E getValue() {
+	public final E getValue() {
 		return mValue;
 	}
 
-	public void setParameter(Query query) {
+	public final void setParameter(IQuery query) {
 		query.setParameter(getParamName(), getValue());
+	}
+
+	public String getOperator() {
+		return mOperator;
 	}
 
 	public String toQuery() {
 
 		if (getTable() == null) {
-			return String.format("%s < :%s", getColumn(), getParamName());
+			return String.format("%s %s :%s", getColumn(), getOperator(),
+					getParamName());
 		}
 
-		return String.format("%s.%s > :%s", getTable(), getColumn(),
-				getParamName());
+		return String.format("%s.%s %s :%s", getTable(), getColumn(),
+				getOperator(), getParamName());
 	}
 }

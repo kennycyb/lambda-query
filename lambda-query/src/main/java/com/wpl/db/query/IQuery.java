@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Kenny Chong (wongpeiling.com)
+ * Copyright 2011,2012 Kenny Chong (wongpeiling.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query.criteria;
+package com.wpl.db.query;
 
-import javax.persistence.Query;
+import java.util.List;
 
-import com.wpl.db.query.ITableSource;
+public interface IQuery {
 
-public class IsEmpty extends Criteria {
+	/**
+	 * Get the actual query object. Use internally only.
+	 * 
+	 * @return
+	 */
+	Object getQuery();
 
-	public IsEmpty(ITableSource tableSource, String table, String column) {
-		super(tableSource, table, column);
-	}
+	// ~ Set Parameters --------------------------------------------------------
+	void setParameter(String name, Object value);
 
-	public void setParameter(Query query) {
-		// DO NOTHING
-	}
-
-	public String toQuery() {
-		if (getTable() == null) {
-			return String.format("%s IS EMPTY", getColumn());
-		}
-
-		return String.format("%s.%s IS EMPTY", getTable(), getColumn());
-	}
+	// ~ Get Results -----------------------------------------------------------
+	List<?> getResultList();
 }
