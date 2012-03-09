@@ -32,15 +32,15 @@ public interface IWhereClause extends IQueryBuilder {
 	 * @param argument
 	 * @param value
 	 */
-	<E> void isEquals(E argument, E value);
+	<T> void isEquals(T argument, T value);
 
-	<E> void isNotEquals(E argument, E value);
+	<T> void isNotEquals(T argument, T value);
 
-	<E> void between(E argument, E min, E max);
+	<T> void between(T argument, T min, T max);
 
-	<E> void greaterThan(E argument, E value);
+	<T> void greaterThan(T argument, T value);
 
-	<E> void lessThan(E argument, E value);
+	<T> void lessThan(T argument, T value);
 
 	void like(Object argument, String pattern);
 
@@ -50,5 +50,5 @@ public interface IWhereClause extends IQueryBuilder {
 
 	void isNotEmpty(Collection<?> argument);
 
-	<E> void in(Collection<E> argument, Collection<E> values);
+	<T> void in(Collection<T> argument, Collection<T> values);
 }

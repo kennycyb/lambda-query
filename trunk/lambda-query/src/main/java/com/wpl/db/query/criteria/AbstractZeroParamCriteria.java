@@ -13,29 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.db.query.jdbc;
+package com.wpl.db.query.criteria;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.wpl.db.query.IQuery;
+import com.wpl.db.query.ITableSource;
 
-public class JdbcUtils {
+public abstract class AbstractZeroParamCriteria extends Criteria {
 
-	public static void closeQuietly(Statement stmt) {
-		try {
-			if (stmt != null) {
-				stmt.close();
-			}
-		} catch (SQLException ignored) {
-		}
+	public AbstractZeroParamCriteria(ITableSource tableSource, String table,
+			String column) {
+		super(tableSource, table, column);
 	}
 
-	public static void closeQuietly(ResultSet rs) {
-		try {
-			if (rs != null) {
-				rs.close();
-			}
-		} catch (SQLException ignored) {
-		}
+	public final void setParameter(IQuery query) {
+		// DO NOTHING
 	}
 }

@@ -16,7 +16,7 @@
 package com.wpl.db.query.criteria;
 
 import com.wpl.db.query.ITableSource;
-import com.wpl.db.query.jpa.LambdaBase;
+import com.wpl.db.query.LambdaBase;
 
 public abstract class Criteria extends LambdaBase implements ICriteria {
 
@@ -30,20 +30,20 @@ public abstract class Criteria extends LambdaBase implements ICriteria {
 		this.mTableSource = tableSource;
 	}
 
-	protected String getNextParamName() {
+	protected final String getNextParamName() {
 		return mTableSource.getNextParamName();
 	}
 
-	public String getColumn() {
+	public final String getColumn() {
 		return mColumn;
 	}
 
-	public String getTable() {
+	public final String getTable() {
 		return mTable;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return toQuery();
 	}
 }

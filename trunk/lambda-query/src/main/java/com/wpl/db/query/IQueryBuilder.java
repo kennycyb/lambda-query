@@ -15,8 +15,11 @@
  */
 package com.wpl.db.query;
 
-import javax.persistence.Query;
-
+/**
+ * Query Builder
+ * 
+ * @param <E>
+ */
 public interface IQueryBuilder {
 
 	/**
@@ -27,5 +30,5 @@ public interface IQueryBuilder {
 
 	String toQuery();
 
-	void setParameter(Query query);
+	void setParameter(IQuery query);
 }
